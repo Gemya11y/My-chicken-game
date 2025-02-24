@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة أونه</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            direction: rtl;
+            transition: background-color 0.5s ease;
+        }
+        .game-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        .game-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .game-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .game-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            width: 80%;
+            display: inline-block;
+        }
+        .game-button:hover {
+            background-color: #0056b3;
+        }
+        .password-input {
+            margin-top: 20px;
+        }
+        .password-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .question-container {
+            margin-top: 20px;
+        }
+        .question-container button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="game-container">
+        <h1 class="game-title">مرحبًا بكم في لعبة أونه</h1>
+        <p class="game-description">استعد للتحدي! اضغط على الزر لبدء اللعبة.</p>
+        <button class="game-button" onclick="startGame()">ابدأ اللعبة</button>
+    </div>
+
+    <script>
+        function startGame() {
+            const isReady = window.confirm("هل أنت مستعد للعب لعبة أونه؟");
+            
+            if (isReady) {
+                const container = document.getElementById('game-container');
+                if (container) {
+                    container.innerHTML = `
+                        <h1 class="game-title">اختر خيارك</h1>
+                        <button class="game-button" onclick="chooseOption('اونه')">أونه</button>
+                        <button class="game-button" onclick="chooseOption('ايمي')">ايمي</button>
+                    `;
+                } else {
+                    alert("حدث خطأ أثناء تحميل اللعبة. يرجى تحديث الصفحة وإعادة المحاولة.");
+                }
+            } else {
+                alert("لا بأس، يمكنك البدء عندما تشعر بالجاهزية!");
+            }
+        }
+
+        function chooseOption(option) {
+            if (option === 'اونه') {
+                const container = document.getElementById('game-container');
+                container.innerHTML = `
+                    <h1 class="game-title">أهلاً بكِ في عالم أونه اللطيف!</h1>
+                    <p>يرجى إدخال كلمة السر لدخول العالم:</p>
+                    <div class="password-input">
+                        <input type="text" id="password-input" placeholder="كلمة السر...">
+                    </div>
+                    <button class="game-button" onclick="checkPassword()">دخول</button>
+                `;
+            } else {
+                alert(`اخترت: ${option}`);
+                // يمكنك إضافة المزيد من المنطق هنا بناءً على الخيار المختار
+            }
+        }
+
+        function checkPassword() {
+            const passwordInput = document.getElementById('password-input').value;
+            const correctPassword = "اونه الجميلة";
+
+            if (passwordInput === correctPassword) {
+                alert("تم التأكيد من الهوية! ولكن الدخول إلى هذا العالم ليس سهل.");
+                showQuestion();
+            } else {
+                alert("كلمة السر غير صحيحة! حاولي مرة أخرى.");
+            }
+        }
+
+        function showQuestion() {
+            const container = document.getElementById('game-container');
+            container.innerHTML = `
+                <h1 class="game-title">سؤال الدخول</h1>
+                <p>كيف يمكن أن تكون الإضاءة بنفسجية ومبهرة؟</p>
+                <div class="question-container">
+                    <button class="game-button" onclick="checkAnswer('بنفسجي')">الإضاءة بنفسجي</button>
+                    <button class="game-button" onclick="checkAnswer('أحمر')">الإضاءة أحمر</button>
+                    <button class="game-button" onclick="checkAnswer('أخضر')">الإضاءة أخضر</button>
+                </div>
+            `;
+        }
+
+        function checkAnswer(answer) {
+            if (answer === 'بنفسجي') {
+                alert("إجابة صحيحة! كوتي كوتي على الشطاره بس لسه فيه آخر سؤال ع تدخلك العالم.");
+                showFinalQuestion();
+            } else {
+                alert("إجابة خاطئة! حاولي مرة أخرى.");
+            }
+        }
+
+        function showFinalQuestion() {
+            const container = document.getElementById('game-container');
+            container.innerHTML = `
+                <h1 class="game-title">السؤال الأخير</h1>
+                <p>الوزة دايما بتقولها... اختر الكلمة الصحيحة:</p>
+                <div class="question-container">
+                    <button class="game-button" onclick="checkFinalAnswer('لوس')">لوس</button>
+                    <button class="game-button" onclick="checkFinalAnswer('فلوس')">فلوس</button>
+                    <button class="game-button" onclick="checkFinalAnswer('مال')">مال</button>
+                </div>
+            `;
+        }
+
+        function checkFinalAnswer(answer) {
+            if (answer === 'لوس') {
+                alert("كويس جدا! دي الشطاره اللي ناويين عليها. تصبحي دخلتي عالم أونه رسمي.");
+                celebrateEntry();
+            } else {
+                alert("إجابة خاطئة! حاولي مرة أخرى.");
+            }
+        }
+
+        function celebrateEntry() {
+            document.body.style.backgroundColor = '#FFD700'; // لون ذهبي
+            setTimeout(() => {
+                document.body.style.backgroundColor = '#FF69B4'; // لون وردي فاتح
+            }, 500);
+            setTimeout(() => {
+                document.body.style.backgroundColor = '#8A2BE2'; // لون بنفسجي
+            }, 1000);
+
+            const container = document.getElementById('game-container');
+            container.innerHTML = `
+                <h1 class="game-title" style="color: white;">مرحبًا بكِ في عالم أونه!</h1>
+                <p style="color: white;">فرحتنا كبيرة إنكِ معانا هنا. استمتعي بالمغامرة الرائعة!</p>
+            `;
+        }
+    </script>
+</body>
+</html>
